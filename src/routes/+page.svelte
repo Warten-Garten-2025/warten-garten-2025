@@ -4,6 +4,8 @@
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 	import panoramaImage from './panorama_01.jpg';
 
+	let selectedParticle = null;
+
 	onMount(() => {
 		// Scene
 		const scene = new THREE.Scene();
@@ -47,6 +49,73 @@
 		const sphere = new THREE.Mesh(geometry, material);
 		scene.add(sphere);
 
+		// Create particles
+		const numParticles = 15;
+		const particles = [];
+		const particleGroup = new THREE.Group();
+		scene.add(particleGroup);
+
+		for (let i = 0; i < numParticles; i++) {
+			// Generate random position within a sphere (radius 80)
+			const radius = 80;
+			const phi = Math.acos(2 * Math.random() - 1);
+			const theta = Math.random() * Math.PI * 2;
+
+			const x = radius * Math.sin(phi) * Math.cos(theta);
+			const y = radius * Math.sin(phi) * Math.sin(theta);
+			const z = radius * Math.cos(phi);
+
+			// Create particle geometry and material
+			const particleGeometry = new THREE.SphereGeometry(2, 32, 32);
+			const particleMaterial = new THREE.MeshBasicMaterial({
+				color: new THREE.Color().setHSL(i / numParticles, 0.8, 0.6)
+			});
+
+			const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+			particle.position.set(x, y, z);
+			particle.userData = { id: i, isSelected: false };
+
+			particleGroup.add(particle);
+			particles.push(particle);
+		}
+
+		// Raycaster for mouse picking
+		const raycaster = new THREE.Raycaster();
+		const mouse = new THREE.Vector2();
+
+		// Mouse click handler
+		const onMouseClick = (event) => {
+			// Calculate mouse position in normalized device coordinates
+			const rect = canvas.getBoundingClientRect();
+			mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+			mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+			// Update the picking ray with the camera and mouse position
+			raycaster.setFromCamera(mouse, camera);
+
+			// Calculate objects intersecting the picking ray
+			const intersects = raycaster.intersectObjects(particles);
+
+			if (intersects.length > 0) {
+				const clickedParticle = intersects[0].object;
+
+				// Deselect previous particle
+				if (selectedParticle !== null) {
+					selectedParticle.scale.set(1, 1, 1);
+					selectedParticle.userData.isSelected = false;
+				}
+
+				// Select new particle
+				selectedParticle = clickedParticle;
+				selectedParticle.scale.set(1.5, 1.5, 1.5);
+				selectedParticle.userData.isSelected = true;
+
+				console.log(`Clicked particle ${clickedParticle.userData.id}`);
+			}
+		};
+
+		canvas.addEventListener('click', onMouseClick);
+
 		// Controls - allows user to look around
 		const controls = new OrbitControls(camera, canvas);
 		controls.enableDamping = true; // Smooth camera movement
@@ -87,11 +156,16 @@
 		// Cleanup
 		return () => {
 			window.removeEventListener('resize', handleResize);
+			canvas.removeEventListener('click', onMouseClick);
 			controls.dispose();
 			geometry.dispose();
 			material.dispose();
 			texture.dispose();
 			renderer.dispose();
+			particles.forEach((p) => {
+				p.geometry.dispose();
+				p.material.dispose();
+			});
 		};
 	});
 </script>
@@ -105,12 +179,18 @@
 		overflow: hidden;
 	}
 
+	:global(html) {
+		width: 100%;
+		height: 100%;
+	}
+
 	canvas.webgl {
+		display: block;
+		width: 100%;
+		height: 100vh;
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 100%;
 		outline: none;
 	}
 </style>
