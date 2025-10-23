@@ -2,9 +2,27 @@
 	import { onMount } from 'svelte';
 	import * as THREE from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+	import BottomBar from '$lib/BottomBar.svelte';
+	import Hotspots from '$lib/Hotspots.svelte';
+	import AudioUI from '$lib/AudioUI.svelte';
 	import panoramaImage from './panorama_01.jpg';
 
 	let selectedParticle = null;
+	let audioUIActive = false;
+	let audioData = {
+		title: 'Now playing',
+		meta: '—',
+		file: ''
+	};
+
+	function handleHotspotClick(audio) {
+		audioData = {
+			title: audio.title,
+			file: audio.cloudinaryUrl,
+			meta: `${audio.artist} • ${audio.category}`
+		};
+		audioUIActive = true;
+	}
 
 	onMount(() => {
 		// Scene
@@ -171,6 +189,10 @@
 </script>
 
 <canvas class="webgl"></canvas>
+
+<BottomBar />
+<Hotspots onHotspotClick={handleHotspotClick} />
+<AudioUI isActive={audioUIActive} {audioData} />
 
 <style>
 	:global(body) {
