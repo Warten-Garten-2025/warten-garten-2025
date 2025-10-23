@@ -95,7 +95,7 @@
 				>
 					<!-- download -->
 					<a
-						href="media/sample.pdf"
+						href="/pdf/sample.pdf"
 						download
 						class="download-btn"
 						aria-label="Download PDF"
@@ -120,7 +120,7 @@
 				<iframe
 					class="pdf-viewer"
 					style="width:100%; height:80vh; border:none; border-radius:10px;"
-					src="media/sample.pdf#toolbar=0&navpanes=0&zoom=FitH"
+					src="pdf/sample.pdf#toolbar=0&navpanes=0&zoom=FitH"
 					allowfullscreen
 					title="PDF Viewer"
 				/>

@@ -1,0 +1,22 @@
+@font-face {
+  font-family: myFont;
+  src: url(fonts/WartenGartenKern03-Regular.woff2);
+}
+
+:root {
+  --primary-color: #BCCD00;
+  --secondary-color: #AF0A7F;
+
+  --font-body: 'myFont', Arial, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: myFont, Arial, sans-serif;
+  overflow: hidden;
+  background: #95127C;
+}

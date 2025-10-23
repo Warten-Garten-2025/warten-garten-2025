@@ -16,8 +16,8 @@
 			on:click={() => handleClick(audio)}
 			aria-label="Play audio: {audio.title}"
 			style="top: {audio.hotspot.y}%; left: {audio.hotspot.x}%;"
-			title={audio.title}
-		></button>
+			title={audio.title}><img src="/icons/music.svg" alt="" /></button
+		>
 	{/each}
 </div>
 
@@ -40,13 +40,13 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 10px;
-		background: #c0ce28;
-		border: 2px solid white;
+		background-color: #c0ce28;
+		border: none;
 		cursor: pointer;
 		transform: translate(-50%, -50%);
 		transition:
 			transform 0.2s ease,
-			background 0.3s;
+			background-color 0.3s;
 		z-index: 501;
 	}
 
