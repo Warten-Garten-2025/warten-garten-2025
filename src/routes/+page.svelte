@@ -75,16 +75,19 @@
 		scene.add(particleGroup);
 
 		for (let i = 0; i < numParticles; i++) {
-			// Generate random position within a sphere, avoiding poles (top/bottom)
-			const radius = 450; // Increased radius for sparse distribution
+			// Generate particles with even longitude distribution and random latitude
+			const radius = 450;
 
-			// Restrict phi (latitude) to avoid poles: 0.3 to 2.8 radians (~17° to 160°)
-			const phi = 0.3 + Math.random() * (Math.PI - 0.6);
-			const theta = Math.random() * Math.PI * 2;
+			// Evenly distribute angle around the sphere (longitude)
+			const angle = (i / numParticles) * Math.PI * 2;
 
-			const x = radius * Math.sin(phi) * Math.cos(theta);
-			const y = radius * Math.sin(phi) * Math.sin(theta);
-			const z = radius * Math.cos(phi);
+			// Random latitude constrained to avoid poles: y between -150 and 150
+			const y = (Math.random() - 0.5) * 580; // Range: -150 to 150
+
+			// Calculate x and z based on the angle and remaining radius at this latitude
+			const lateralRadius = Math.sqrt(radius * radius - y * y); // Pythagoras to stay on sphere
+			const x = lateralRadius * Math.cos(angle);
+			const z = lateralRadius * Math.sin(angle);
 
 			// Create invisible particle (just for position tracking)
 			const particleGeometry = new THREE.SphereGeometry(2, 32, 32);
