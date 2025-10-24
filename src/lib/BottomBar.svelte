@@ -1,17 +1,17 @@
 <script>
 	let selectedPanel = null;
 
+	export let onPanelOpen = () => {};
+
 	function togglePanel(panelId) {
 		selectedPanel = selectedPanel === panelId ? null : panelId;
+		if (selectedPanel) {
+			onPanelOpen();
+		}
 	}
 
 	function closePanel() {
 		selectedPanel = null;
-	}
-
-	function getPanelAlignment(panelId) {
-		// Simple logic - you can enhance this with actual positioning
-		return panelId === 'imprint' ? 'right-align' : '';
 	}
 </script>
 
@@ -21,14 +21,12 @@
 			class="tab-button"
 			on:click={() => togglePanel('herbarium')}
 			aria-expanded={selectedPanel === 'herbarium'}
+			aria-label="Herbarium section"
 		>
-			HERBARIUM
+			<span>1</span>
+			<span>HERBARIUM</span>
 		</button>
-		<div
-			class="panel"
-			class:show={selectedPanel === 'herbarium'}
-			class:right-align={getPanelAlignment('herbarium')}
-		>
+		<div class="panel" class:show={selectedPanel === 'herbarium'}>
 			<div class="panel-content">
 				<span class="close-panel" on:click={closePanel}>&times;</span>
 				<p>Herbarium details here.</p>
@@ -41,14 +39,12 @@
 			class="tab-button"
 			on:click={() => togglePanel('about')}
 			aria-expanded={selectedPanel === 'about'}
+			aria-label="About section"
 		>
-			ABOUT
+			<span>2</span>
+			<span>ABOUT</span>
 		</button>
-		<div
-			class="panel"
-			class:show={selectedPanel === 'about'}
-			class:right-align={getPanelAlignment('about')}
-		>
+		<div class="panel" class:show={selectedPanel === 'about'}>
 			<div class="panel-content">
 				<span class="close-panel" on:click={closePanel}>&times;</span>
 				<p>About section content.</p>
@@ -61,14 +57,12 @@
 			class="tab-button"
 			on:click={() => togglePanel('imprint')}
 			aria-expanded={selectedPanel === 'imprint'}
+			aria-label="Imprint section"
 		>
-			IMPRINT
+			<span>3</span>
+			<span>IMPRINT</span>
 		</button>
-		<div
-			class="panel"
-			class:show={selectedPanel === 'imprint'}
-			class:right-align={getPanelAlignment('imprint')}
-		>
+		<div class="panel" class:show={selectedPanel === 'imprint'}>
 			<div class="panel-content">
 				<span class="close-panel" on:click={closePanel}>&times;</span>
 				<p>Imprint text here.</p>
@@ -81,14 +75,12 @@
 			class="tab-button"
 			on:click={() => togglePanel('exercises')}
 			aria-expanded={selectedPanel === 'exercises'}
+			aria-label="Exercises section"
 		>
-			EXERCISES
+			<span>4</span>
+			<span>QUOTES</span>
 		</button>
-		<div
-			class="panel"
-			class:show={selectedPanel === 'exercises'}
-			class:right-align={getPanelAlignment('exercises')}
-		>
+		<div class="panel" class:show={selectedPanel === 'exercises'}>
 			<div class="panel-content">
 				<div
 					style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"
@@ -130,19 +122,16 @@
 </div>
 
 <style>
-	button {
-		font-family: var(--font-stylistic);
-	}
 	.bottom-bar {
 		position: absolute;
-		bottom: 0;
+		top: 0;
 		left: 0;
 		width: 100%;
 		display: flex;
-		justify-content: space-evenly;
-		padding: 10px 20px;
+		justify-content: space-between;
+		padding: 2rem;
 		background: rgba(0, 0, 0, 0);
-		z-index: 10;
+		z-index: 2;
 		flex-wrap: wrap;
 		transition: opacity 0.4s ease;
 	}
@@ -157,55 +146,57 @@
 	}
 
 	.tab-button {
-		background-color: #c0ce28;
-		color: #95127c;
+		background: none;
 		border: none;
-		border-radius: 15px;
-		padding: 5px 10px;
+		padding: 0;
 		cursor: pointer;
-		font-size: 26px;
-		transition: background-color 0.2s ease;
+		display: flex;
+		gap: 0.5rem;
 	}
 
-	.tab-button:hover,
-	.tab-button[aria-expanded='true'] {
-		background: #95127c;
-		color: #c0ce28;
+	.tab-button span {
+		background-color: var(--primary-color);
+		color: var(--secondary-color);
+		border: none;
+		border-radius: 15px;
+		padding: 5px 16px;
+		cursor: pointer;
+		font-family: var(--font-stylistic);
+		font-size: 26px;
+		transition:
+			background-color 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.tab-button:hover span,
+	.tab-button[aria-expanded='true'] span {
+		background-color: var(--secondary-color);
+		color: var(--primary-color);
 	}
 
 	.panel {
-		position: absolute;
-		bottom: 50px;
-		left: 0;
-		transform-origin: bottom left;
-		transform: scale(0.95) translateY(10px);
-		opacity: 0;
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		transform-origin: bottom;
+		transform: translateY(160%);
 		width: 80vw;
 		max-width: 700px;
 		max-height: 70vh;
-		background: #95127c;
-		color: #c0ce28;
+		background: var(--secondary-color);
+		color: var(--primary-color);
 		border-radius: 12px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		transition:
-			transform 0.3s ease,
-			opacity 0.3s ease;
+		transition: transform 0.4s ease;
 		pointer-events: none;
 	}
 
 	.panel.show {
-		transform: scale(1) translateY(0);
-		opacity: 1;
+		transform: translateY(0);
 		pointer-events: auto;
-	}
-
-	.panel.right-align {
-		left: auto;
-		right: 0;
-		transform-origin: bottom right;
 	}
 
 	.panel-content {

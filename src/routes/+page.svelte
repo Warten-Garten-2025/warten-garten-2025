@@ -25,7 +25,20 @@
 		audioUIActive = true;
 	}
 
+	function handleAudioClose() {
+		audioUIActive = false;
+	}
+
+	function handleBottomBarPanelOpen() {
+		audioUIActive = false;
+	}
+
 	onMount(() => {
+		// Guard against double initialization - check if particles already initialized
+		if (Object.keys(particlePositions).length > 0) {
+			return;
+		}
+
 		// Scene
 		const scene = new THREE.Scene();
 
@@ -82,7 +95,7 @@
 			const angle = (i / numParticles) * Math.PI * 2;
 
 			// Random latitude constrained to avoid poles: y between -150 and 150
-			const y = (Math.random() - 0.5) * 580; // Range: -150 to 150
+			const y = (Math.random() - 0.5) * 580; // Range: -290 to 290
 
 			// Calculate x and z based on the angle and remaining radius at this latitude
 			const lateralRadius = Math.sqrt(radius * radius - y * y); // Pythagoras to stay on sphere
@@ -158,7 +171,6 @@
 		// Cleanup
 		return () => {
 			window.removeEventListener('resize', handleResize);
-			canvas.removeEventListener('click', onMouseClick);
 			controls.dispose();
 			geometry.dispose();
 			material.dispose();
@@ -174,9 +186,9 @@
 
 <canvas class="webgl"></canvas>
 
-<BottomBar />
+<BottomBar onPanelOpen={handleBottomBarPanelOpen} />
 <Hotspots onHotspotClick={handleHotspotClick} {particlePositions} />
-<AudioUI isActive={audioUIActive} {audioData} />
+<AudioUI isActive={audioUIActive} {audioData} onClose={handleAudioClose} />
 
 <style>
 	:global(body) {

@@ -7,6 +7,7 @@
 		meta: '—',
 		file: ''
 	};
+	export let onClose = () => {};
 
 	let audioEl;
 	let isPlaying = false;
@@ -39,6 +40,7 @@
 		audioEl?.pause();
 		isPlaying = false;
 		currentTime = 0;
+		onClose();
 	}
 
 	function skip(amount) {
@@ -104,14 +106,17 @@
 
 <div id="audio-ui" class:active={isActive}>
 	<div class="audio-left">
-		<button class="audio-close" on:click={close}>✕</button>
 		<div class="audio-title-row">
-			<div class="audio-title">{audioData.title}</div>
-			<a class="audio-download" href={audioData.file} download aria-label="Download audio">
-				<i class="fa-solid fa-arrow-down"></i>
+			<div class="audio-title">
+				<img class="audio-icon" src="/icons/purple/sound.svg" alt="" />
+				{audioData.title}
+			</div>
+			<a class="audio-download" href={audioData.file} download aria-label="Download file ">
+				<img class="audio-icon" src="/icons/purple/download_ss01.svg" alt="" />
+				DOWNLOAD
 			</a>
+			<button class="audio-close" on:click={close}>✕</button>
 		</div>
-		<div class="audio-meta">{audioData.meta}</div>
 	</div>
 
 	<div class="audio-right">
@@ -160,8 +165,9 @@
 		right: 0;
 		bottom: 0;
 		display: flex;
-		gap: 16px;
-		padding: 16px;
+		align-items: end;
+		gap: 2rem;
+		padding: 2rem;
 		z-index: 1000;
 		transition:
 			transform 0.45s ease,
@@ -178,42 +184,60 @@
 		pointer-events: auto;
 	}
 
+	.audio-icon {
+		width: 16px;
+		height: 26px;
+		vertical-align: middle;
+		margin-right: 8px;
+		fill: #fff;
+	}
+
 	.audio-left,
 	.audio-right {
-		background: #95127c;
-		color: #c0ce28;
-		border-radius: 14px;
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-		padding: 14px 16px;
+		background: var(--secondary-color);
+		color: var(--primary-color);
+		border-radius: 18px;
+		/* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); */
+		padding: 10px 16px;
 	}
 
 	.audio-left {
-		flex: 0 0 40%;
+		flex: 0 1 50%;
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		background: var(--primary-color);
+		color: var(--secondary-color);
+		height: fit-content;
 	}
 
 	.audio-title-row {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 2rem;
 	}
 
 	.audio-title {
 		font-size: 22px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	.audio-download {
-		color: #95127c;
-		background: #c0ce28;
+		color: var(--secondary-color);
+		background: var(--primary-color);
 		text-decoration: none;
-		padding: 6px 10px;
+
 		border-radius: 10px;
 		font-weight: 700;
 		border: none;
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 22px;
 	}
 
 	.audio-meta {
@@ -227,13 +251,13 @@
 		right: 12px;
 		background: transparent;
 		border: none;
-		color: #c0ce28;
+		color: var(--secondary-color);
 		font-size: 28px;
 		cursor: pointer;
 	}
 
 	.audio-right {
-		flex: 1 1 60%;
+		flex: 1 1 50%;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
@@ -247,7 +271,7 @@
 
 	.icon-btn {
 		background: transparent;
-		color: #c0ce28;
+		color: var(--primary-color);
 		border: none;
 		font-size: 22px;
 		cursor: pointer;
@@ -265,7 +289,7 @@
 	}
 
 	:root {
-		--accent: #c0ce28;
+		--accent: var(--primary-color);
 		--accent-bright: #e8f55a;
 		--track: rgba(255, 255, 255, 0.25);
 	}
@@ -300,7 +324,7 @@
 		transform: translateX(-50%);
 		padding: 4px 8px;
 		background: rgba(149, 18, 124, 0.9);
-		color: #c0ce28;
+		color: var(--primary-color);
 		font-size: 14px;
 		border-radius: 6px;
 		pointer-events: none;
@@ -326,17 +350,17 @@
 		border: none;
 		cursor: pointer;
 		margin-top: -2px;
-		box-shadow: 0 0 6px rgba(192, 206, 40, 0.4);
+		/* box-shadow: 0 0 6px rgba(192, 206, 40, 0.4); */
 		transition:
 			transform 0.15s ease,
-			background-color 0.2s ease,
-			box-shadow 0.2s ease;
+			background-color 0.2s ease;
+		/* box-shadow 0.2s ease; */
 	}
 
 	#seek::-webkit-slider-thumb:hover {
 		transform: scale(1.2);
 		background: var(--accent-bright);
-		box-shadow: 0 0 10px rgba(192, 206, 40, 0.6);
+		/* box-shadow: 0 0 10px rgba(192, 206, 40, 0.6); */
 	}
 
 	#seek::-moz-range-thumb {
@@ -348,14 +372,14 @@
 		cursor: pointer;
 		transition:
 			transform 0.15s ease,
-			background-color 0.2s ease,
-			box-shadow 0.2s ease;
+			background-color 0.2s ease;
+		/* box-shadow 0.2s ease; */
 	}
 
 	#seek::-moz-range-thumb:hover {
 		transform: scale(1.2);
 		background: var(--accent-bright);
-		box-shadow: 0 0 10px rgba(192, 206, 40, 0.6);
+		/* box-shadow: 0 0 10px rgba(192, 206, 40, 0.6); */
 	}
 
 	#vol::-webkit-slider-thumb {
