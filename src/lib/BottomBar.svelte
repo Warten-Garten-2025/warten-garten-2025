@@ -130,6 +130,9 @@
 </div>
 
 <style>
+	button {
+		font-family: var(--font-stylistic);
+	}
 	.bottom-bar {
 		position: absolute;
 		bottom: 0;
@@ -154,14 +157,14 @@
 	}
 
 	.tab-button {
-		background: #c0ce28;
+		background-color: #c0ce28;
 		color: #95127c;
 		border: none;
 		border-radius: 15px;
 		padding: 5px 10px;
 		cursor: pointer;
 		font-size: 26px;
-		transition: background 0.2s ease;
+		transition: background-color 0.2s ease;
 	}
 
 	.tab-button:hover,

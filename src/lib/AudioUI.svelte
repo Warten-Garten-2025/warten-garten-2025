@@ -329,7 +329,7 @@
 		box-shadow: 0 0 6px rgba(192, 206, 40, 0.4);
 		transition:
 			transform 0.15s ease,
-			background 0.2s ease,
+			background-color 0.2s ease,
 			box-shadow 0.2s ease;
 	}
 
@@ -348,7 +348,7 @@
 		cursor: pointer;
 		transition:
 			transform 0.15s ease,
-			background 0.2s ease,
+			background-color 0.2s ease,
 			box-shadow 0.2s ease;
 	}
 

@@ -1,13 +1,22 @@
 @font-face {
   font-family: myFont;
-  src: url(fonts/WartenGartenKern03-Regular.woff2);
+  src: url(/fonts/WartenGartenKern01-Regular.woff2) format('woff2'),
+    url(/fonts/WartenGartenKern01-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: myFontStylistic;
+  src: url(/fonts/WartenGartenKern01-Regular.woff2) format('woff2'),
+    url(/fonts/WartenGartenKern01-Regular.woff) format('woff');
+  font-feature-settings: 'ss01' 1;
 }
 
 :root {
-  --primary-color: #BCCD00;
-  --secondary-color: #AF0A7F;
+  --primary-color: #C0CE28;
+  --secondary-color: #95127C;
 
-  --font-body: 'myFont', Arial, sans-serif;
+  --font-body: myFont, Arial, sans-serif;
+  --font-stylistic: myFontStylistic, Arial, sans-serif;
 }
 
 html,
@@ -18,5 +27,5 @@ body {
   height: 100%;
   font-family: myFont, Arial, sans-serif;
   overflow: hidden;
-  background: #95127C;
+  background: var(--secondary-color);
 }

@@ -5,10 +5,11 @@
 	import BottomBar from '$lib/BottomBar.svelte';
 	import Hotspots from '$lib/Hotspots.svelte';
 	import AudioUI from '$lib/AudioUI.svelte';
+	import { audioFiles } from '$lib/audioData.js';
 	import panoramaImage from './panorama_01.jpg';
 
-	let selectedParticle = null;
 	let audioUIActive = false;
+	let particlePositions = {}; // Changed to object for better reactivity
 	let audioData = {
 		title: 'Now playing',
 		meta: '—',
@@ -68,25 +69,27 @@
 		scene.add(sphere);
 
 		// Create particles
-		const numParticles = 15;
+		const numParticles = audioFiles.length; // Match number of audio files
 		const particles = [];
 		const particleGroup = new THREE.Group();
 		scene.add(particleGroup);
 
 		for (let i = 0; i < numParticles; i++) {
-			// Generate random position within a sphere (radius 80)
-			const radius = 80;
-			const phi = Math.acos(2 * Math.random() - 1);
+			// Generate random position within a sphere, avoiding poles (top/bottom)
+			const radius = 450; // Increased radius for sparse distribution
+
+			// Restrict phi (latitude) to avoid poles: 0.3 to 2.8 radians (~17° to 160°)
+			const phi = 0.3 + Math.random() * (Math.PI - 0.6);
 			const theta = Math.random() * Math.PI * 2;
 
 			const x = radius * Math.sin(phi) * Math.cos(theta);
 			const y = radius * Math.sin(phi) * Math.sin(theta);
 			const z = radius * Math.cos(phi);
 
-			// Create particle geometry and material
+			// Create invisible particle (just for position tracking)
 			const particleGeometry = new THREE.SphereGeometry(2, 32, 32);
 			const particleMaterial = new THREE.MeshBasicMaterial({
-				color: new THREE.Color().setHSL(i / numParticles, 0.8, 0.6)
+				visible: false // Hide particles - only use for position
 			});
 
 			const particle = new THREE.Mesh(particleGeometry, particleMaterial);
@@ -96,43 +99,6 @@
 			particleGroup.add(particle);
 			particles.push(particle);
 		}
-
-		// Raycaster for mouse picking
-		const raycaster = new THREE.Raycaster();
-		const mouse = new THREE.Vector2();
-
-		// Mouse click handler
-		const onMouseClick = (event) => {
-			// Calculate mouse position in normalized device coordinates
-			const rect = canvas.getBoundingClientRect();
-			mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-			mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-			// Update the picking ray with the camera and mouse position
-			raycaster.setFromCamera(mouse, camera);
-
-			// Calculate objects intersecting the picking ray
-			const intersects = raycaster.intersectObjects(particles);
-
-			if (intersects.length > 0) {
-				const clickedParticle = intersects[0].object;
-
-				// Deselect previous particle
-				if (selectedParticle !== null) {
-					selectedParticle.scale.set(1, 1, 1);
-					selectedParticle.userData.isSelected = false;
-				}
-
-				// Select new particle
-				selectedParticle = clickedParticle;
-				selectedParticle.scale.set(1.5, 1.5, 1.5);
-				selectedParticle.userData.isSelected = true;
-
-				console.log(`Clicked particle ${clickedParticle.userData.id}`);
-			}
-		};
-
-		canvas.addEventListener('click', onMouseClick);
 
 		// Controls - allows user to look around
 		const controls = new OrbitControls(camera, canvas);
@@ -165,6 +131,21 @@
 			// Update controls
 			controls.update();
 
+			// Update hotspot positions based on particle positions
+			particles.forEach((particle, index) => {
+				const vector = particle.position.clone();
+				vector.project(camera);
+
+				// Convert to screen coordinates (0-100%)
+				const x = ((vector.x + 1) / 2) * 100;
+				const y = ((1 - vector.y) / 2) * 100;
+
+				// Update positions object (Svelte reactive)
+				if (audioFiles[index]) {
+					particlePositions[audioFiles[index].id] = { x, y };
+				}
+			});
+
 			// Render scene
 			renderer.render(scene, camera);
 		};
@@ -191,7 +172,7 @@
 <canvas class="webgl"></canvas>
 
 <BottomBar />
-<Hotspots onHotspotClick={handleHotspotClick} />
+<Hotspots onHotspotClick={handleHotspotClick} {particlePositions} />
 <AudioUI isActive={audioUIActive} {audioData} />
 
 <style>
