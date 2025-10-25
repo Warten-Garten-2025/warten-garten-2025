@@ -135,46 +135,63 @@
 	</div>
 
 	<div class="audio-right">
-		<div class="player-row">
-			<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
-				><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
-			>
-			{#if !isPlaying}
-				<button class="icon-btn" on:click={play} title="Play"
-					><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
+		<div class="audio-player">
+			<div class="player-row">
+				<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
+					><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
 				>
-			{:else}
-				<button class="icon-btn" on:click={pause} title="Pause"
-					><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
+				{#if !isPlaying}
+					<button class="icon-btn" on:click={play} title="Play"
+						><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
+					>
+				{:else}
+					<button class="icon-btn" on:click={pause} title="Pause"
+						><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
+					>
+				{/if}
+				<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
+					><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
 				>
-			{/if}
-			<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
-				><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
-			>
-			<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
-		</div>
-		<input
-			id="seek"
-			type="range"
-			min="0"
-			max="100"
-			value={seekPercent}
-			step="0.1"
-			on:input={handleSeek}
-			on:mousemove={handleMouseMove}
-		/>
-		<div id="seek-tooltip" style="left: {tooltipX}px">{tooltipTime}</div>
-		<div class="player-row" style="display:none;">
-			<label>Vol</label>
+				<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
+			</div>
 			<input
-				id="vol"
+				id="seek"
 				type="range"
 				min="0"
-				max="1"
-				step="0.01"
-				value={volume}
-				on:input={handleVolumeChange}
+				max="100"
+				value={seekPercent}
+				step="0.1"
+				on:input={handleSeek}
+				on:mousemove={handleMouseMove}
+				style="
+        background: linear-gradient(to right, 
+        transparent 0%, 
+        var(--primary-color) calc({seekPercent}% - 10%), 
+        var(--primary-color) {seekPercent}%, 
+
+        var(--secondary-color) {seekPercent}%, 
+        var(--secondary-color) 100%);"
 			/>
+			<div id="seek-tooltip" style="left: {tooltipX}px">{tooltipTime}</div>
+			<div class="player-row" style="display:none;">
+				<label>Vol</label>
+				<input
+					id="vol"
+					type="range"
+					min="0"
+					max="1"
+					step="0.01"
+					value={volume}
+					on:input={handleVolumeChange}
+				/>
+			</div>
+		</div>
+
+		<div class="audio-info">
+			<div class="audio-artist">
+				<img class="audio-icon" src="/icons/green/artist.svg" alt="" />
+				{audioData.meta}
+			</div>
 		</div>
 	</div>
 
@@ -210,11 +227,10 @@
 		margin-right: 8px;
 	}
 
-	.audio-left,
-	.audio-right {
+	.audio-left {
 		background: var(--secondary-color);
 		color: var(--primary-color);
-		border-radius: 18px;
+		border-radius: 1rem;
 		/* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); */
 		padding: 10px 16px;
 	}
@@ -277,8 +293,34 @@
 	.audio-right {
 		flex: 1 1 50%;
 		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
+
+	.audio-player {
+		flex: 1;
+		background: var(--secondary-color);
+		color: var(--primary-color);
+		border-radius: 1rem;
+		padding: 14px 16px;
+		display: flex;
 		flex-direction: column;
 		gap: 10px;
+	}
+
+	.audio-info {
+		flex: 1;
+		background: var(--secondary-color);
+		color: var(--primary-color);
+		border-radius: 1rem;
+		padding: 14px 16px;
+	}
+
+	.audio-artist {
+		font-size: 22px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	.player-row {
@@ -317,22 +359,17 @@
 		-webkit-appearance: none;
 		appearance: none;
 		width: 100%;
-		height: 8px;
-		border-radius: 10px;
+		height: 10px;
+		border-radius: 3px;
 		outline: none;
-		background: linear-gradient(
-			to right,
-			var(--accent) 0%,
-			var(--accent) 0%,
-			var(--track) 0%,
-			var(--track) 100%
-		);
+		border: 1px solid var(--primary-color);
 		transition: height 0.2s ease;
 	}
 
 	#vol {
 		max-width: 160px;
 		height: 6px;
+		background-color: var(--secondary-color);
 	}
 
 	#seek-tooltip {
@@ -362,12 +399,13 @@
 		-webkit-appearance: none;
 		appearance: none;
 		width: 20px;
-		height: 12px;
-		border-radius: 3px;
+		height: 20px;
+		border-radius: 6px;
 		background: var(--accent);
 		border: none;
 		cursor: pointer;
 		margin-top: -2px;
+		margin-left: -1px;
 		/* box-shadow: 0 0 6px rgba(192, 206, 40, 0.4); */
 		transition:
 			transform 0.15s ease,
@@ -383,11 +421,12 @@
 
 	#seek::-moz-range-thumb {
 		width: 20px;
-		height: 12px;
-		border-radius: 3px;
+		height: 20px;
+		border-radius: 5px;
 		background: var(--accent);
 		border: none;
 		cursor: pointer;
+		margin-left: -10px;
 		transition:
 			transform 0.15s ease,
 			background-color 0.2s ease;
@@ -434,11 +473,18 @@
 	@media (max-width: 900px) {
 		#audio-ui {
 			flex-direction: column;
+			gap: 0.5rem;
 		}
 
 		.audio-left,
 		.audio-right {
 			flex: 1 1 auto;
+			width: 100%;
+		}
+
+		.audio-right {
+			flex-direction: column;
+			gap: 0.5rem;
 		}
 	}
 </style>

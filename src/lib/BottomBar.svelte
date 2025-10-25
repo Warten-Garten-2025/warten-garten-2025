@@ -219,6 +219,7 @@
 	@media (max-width: 900px) {
 		.bottom-bar {
 			flex-direction: column;
+			gap: 1rem;
 		}
 	}
 </style>
