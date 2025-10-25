@@ -16,6 +16,7 @@
 	let volume = 1;
 	let tooltipTime = '0:00';
 	let tooltipX = 0;
+	let lastSetFile = null;
 
 	function fmtTime(s) {
 		if (!isFinite(s)) return '0:00';
@@ -44,8 +45,9 @@
 	}
 
 	function skip(amount) {
-		if (audioEl) {
-			audioEl.currentTime = Math.max(0, Math.min(duration, audioEl.currentTime + amount));
+		if (audioEl && isFinite(duration) && duration > 0) {
+			const newTime = Math.max(0, Math.min(duration, audioEl.currentTime + amount));
+			audioEl.currentTime = newTime;
 		}
 	}
 
@@ -75,7 +77,18 @@
 		audioEl = document.querySelector('#audio-player');
 		if (!audioEl) return;
 
+		// Set initial source
+		audioEl.src = audioData.file;
+
 		audioEl.addEventListener('loadedmetadata', () => {
+			duration = audioEl.duration;
+		});
+
+		audioEl.addEventListener('loadeddata', () => {
+			duration = audioEl.duration;
+		});
+
+		audioEl.addEventListener('durationchange', () => {
 			duration = audioEl.duration;
 		});
 
@@ -97,7 +110,9 @@
 		});
 	});
 
-	$: if (audioEl) {
+	// Update source only when audioData.file changes
+	$: if (audioEl && audioData.file && audioData.file !== lastSetFile) {
+		lastSetFile = audioData.file;
 		audioEl.src = audioData.file;
 	}
 
