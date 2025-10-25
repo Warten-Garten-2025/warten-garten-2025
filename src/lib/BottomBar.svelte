@@ -51,7 +51,7 @@
 					<a
 						class="download-btn"
 						aria-label="View fullscreen"
-						style="background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold;"
+						style="background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold; user-select:none; cursor:pointer;"
 						on:click={() => document.querySelector('.pdf-viewer')?.requestFullscreen()}
 					>
 						FULLSCREEN
