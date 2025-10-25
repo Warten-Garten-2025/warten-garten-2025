@@ -192,18 +192,14 @@
 		gap: 1rem;
 		padding: 2rem;
 		z-index: 1000;
-		transition:
-			transform 0.45s ease,
-			opacity 0.35s ease;
+		transition: transform 0.45s ease;
 		transform: translateY(100%);
-		opacity: 0;
 		pointer-events: none;
 		background: transparent;
 	}
 
 	#audio-ui.active {
 		transform: translateY(0);
-		opacity: 1;
 		pointer-events: auto;
 	}
 
