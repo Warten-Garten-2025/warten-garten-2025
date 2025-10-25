@@ -45,7 +45,7 @@
 						aria-label="Download PDF"
 						style="margin-right:25px; background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold;"
 					>
-						<i class="fa-solid fa-arrow-down" />
+						DOWNLOAD
 					</a>
 					<!-- fullscreen -->
 					<a
@@ -54,7 +54,7 @@
 						style="background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold;"
 						on:click={() => document.querySelector('.pdf-viewer')?.requestFullscreen()}
 					>
-						<i class="fa-solid fa-up-right-and-down-left-from-center" />
+						FULLSCREEN
 					</a>
 					<span class="close-panel" style="font-size:36px; cursor:pointer;" on:click={closePanel}
 						>&times;</span

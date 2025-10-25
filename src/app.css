@@ -49,7 +49,10 @@ h1 {
 
 p {
   font-size: 16px;
-  font-family: var(--font-body);
+  font-family: var(--font-stylistic);
+  line-height: 1.2;
+  margin: 0;
+
 }
 
 a {

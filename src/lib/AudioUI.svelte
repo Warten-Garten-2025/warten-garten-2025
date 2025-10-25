@@ -4,7 +4,7 @@
 	export let isActive = false;
 	export let audioData = {
 		title: 'Now playing',
-		meta: '—',
+		artist: '—',
 		file: ''
 	};
 	export let onClose = () => {};
@@ -190,7 +190,11 @@
 		<div class="audio-info">
 			<div class="audio-artist">
 				<img class="audio-icon" src="/icons/green/arrow.svg" alt="" />
-				{audioData.meta}
+				<p>{audioData.artist}</p>
+			</div>
+			<div class="audio-artist">
+				<img class="audio-icon" src="/icons/green/arrow.svg" alt="" />
+				<p>{audioData.description}</p>
 			</div>
 		</div>
 	</div>
@@ -295,6 +299,7 @@
 		display: flex;
 		flex-direction: row;
 		gap: 1rem;
+		align-items: end;
 	}
 
 	.audio-player {
@@ -314,13 +319,12 @@
 		color: var(--primary-color);
 		border-radius: 1rem;
 		padding: 14px 16px;
+		height: 90px;
 	}
 
 	.audio-artist {
-		font-size: 22px;
 		display: flex;
 		align-items: center;
-		gap: 8px;
 	}
 
 	.player-row {
@@ -485,6 +489,15 @@
 		.audio-right {
 			flex-direction: column;
 			gap: 0.5rem;
+		}
+
+		.audio-player {
+			width: 100%;
+		}
+
+		.audio-info {
+			width: 100%;
+			height: fit-content;
 		}
 	}
 </style>

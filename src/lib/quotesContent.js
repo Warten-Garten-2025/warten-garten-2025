@@ -28,4 +28,4 @@ export const quotesContent = `
 
 <p>“Indigenous and postcolonial scholarship teaches us that friction-free wilderness, devoid of human intervention, never existed in the first place, nor the division of nature and culture.* Likewise, the position of a neutral recordist, or recording, is no longer a tenable position for contemporary practice and has never been.”</p>
 <h5>Wright, M.P. (2022). Listening after nature : field recording, ecology, critical practice. Bloomsbury Academic.</h5>
-`; 
+`

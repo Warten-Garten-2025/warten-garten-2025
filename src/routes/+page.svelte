@@ -12,7 +12,7 @@
 	let particlePositions = {}; // Changed to object for better reactivity
 	let audioData = {
 		title: 'Now playing',
-		meta: '—',
+		artist: '—',
 		file: ''
 	};
 	let bottomBar;
@@ -21,7 +21,8 @@
 		audioData = {
 			title: audio.title,
 			file: audio.cloudinaryUrl,
-			meta: `${audio.artist} • ${audio.category}`
+			artist: audio.artist,
+			description: audio.description
 		};
 		audioUIActive = true;
 		// Close menu panel when opening audio UI
