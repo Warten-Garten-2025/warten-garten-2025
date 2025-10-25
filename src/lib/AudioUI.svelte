@@ -136,24 +136,6 @@
 
 	<div class="audio-right">
 		<div class="audio-player">
-			<div class="player-row">
-				<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
-					><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
-				>
-				{#if !isPlaying}
-					<button class="icon-btn" on:click={play} title="Play"
-						><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
-					>
-				{:else}
-					<button class="icon-btn" on:click={pause} title="Pause"
-						><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
-					>
-				{/if}
-				<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
-					><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
-				>
-				<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
-			</div>
 			<input
 				id="seek"
 				type="range"
@@ -172,6 +154,24 @@
         var(--secondary-color) {seekPercent}%, 
         var(--secondary-color) 100%);"
 			/>
+			<div class="player-row">
+				<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
+					><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
+				>
+				{#if !isPlaying}
+					<button class="icon-btn" on:click={play} title="Play"
+						><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
+					>
+				{:else}
+					<button class="icon-btn" on:click={pause} title="Pause"
+						><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
+					>
+				{/if}
+				<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
+					><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
+				>
+				<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
+			</div>
 			<div id="seek-tooltip" style="left: {tooltipX}px">{tooltipTime}</div>
 			<div class="player-row" style="display:none;">
 				<label>Vol</label>
@@ -189,7 +189,7 @@
 
 		<div class="audio-info">
 			<div class="audio-artist">
-				<img class="audio-icon" src="/icons/green/artist.svg" alt="" />
+				<img class="audio-icon" src="/icons/green/arrow.svg" alt="" />
 				{audioData.meta}
 			</div>
 		</div>
@@ -336,7 +336,7 @@
 		font-size: 22px;
 		cursor: pointer;
 		line-height: 1;
-		padding: 6px 10px;
+		padding: 6px 0px;
 	}
 
 	.icon-btn:hover {
@@ -398,9 +398,9 @@
 	#seek::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 20px;
-		height: 20px;
-		border-radius: 6px;
+		width: 24px;
+		height: 24px;
+		border-radius: 8px;
 		background: var(--accent);
 		border: none;
 		cursor: pointer;
@@ -420,9 +420,9 @@
 	}
 
 	#seek::-moz-range-thumb {
-		width: 20px;
-		height: 20px;
-		border-radius: 5px;
+		width: 24px;
+		height: 24px;
+		border-radius: 8px;
 		background: var(--accent);
 		border: none;
 		cursor: pointer;

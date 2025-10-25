@@ -51,3 +51,8 @@ p {
   font-size: 16px;
   font-family: var(--font-body);
 }
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}

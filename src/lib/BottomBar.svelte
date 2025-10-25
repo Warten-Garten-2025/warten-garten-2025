@@ -1,4 +1,6 @@
 <script>
+	import { imprintContent } from './imprintContent';
+	import { quotesContent } from './quotesContent';
 	let selectedPanel = null;
 
 	export let onPanelOpen = () => {};
@@ -32,66 +34,12 @@
 		</button>
 		<div class="panel" class:show={selectedPanel === 'herbarium'}>
 			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
-				<p>Herbarium details here.</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="tab-container">
-		<button
-			class="tab-button"
-			on:click={() => togglePanel('about')}
-			aria-expanded={selectedPanel === 'about'}
-			aria-label="About section"
-		>
-			<span>2</span>
-			<span>ABOUT</span>
-		</button>
-		<div class="panel" class:show={selectedPanel === 'about'}>
-			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
-				<p>About section content.</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="tab-container">
-		<button
-			class="tab-button"
-			on:click={() => togglePanel('imprint')}
-			aria-expanded={selectedPanel === 'imprint'}
-			aria-label="Imprint section"
-		>
-			<span>3</span>
-			<span>IMPRINT</span>
-		</button>
-		<div class="panel" class:show={selectedPanel === 'imprint'}>
-			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
-				<p>Imprint text here.</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="tab-container">
-		<button
-			class="tab-button"
-			on:click={() => togglePanel('exercises')}
-			aria-expanded={selectedPanel === 'exercises'}
-			aria-label="Exercises section"
-		>
-			<span>4</span>
-			<span>QUOTES</span>
-		</button>
-		<div class="panel" class:show={selectedPanel === 'exercises'}>
-			<div class="panel-content">
 				<div
 					style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"
 				>
 					<!-- download -->
 					<a
-						href="/pdf/sample.pdf"
+						href="/pdf/Herbarium.pdf"
 						download
 						class="download-btn"
 						aria-label="Download PDF"
@@ -116,10 +64,86 @@
 				<iframe
 					class="pdf-viewer"
 					style="width:100%; height:80vh; border:none; border-radius:10px;"
-					src="pdf/sample.pdf#toolbar=0&navpanes=0&zoom=FitH"
+					src="/pdf/Herbarium.pdf#toolbar=0&navpanes=0&zoom=FitH"
 					allowfullscreen
 					title="PDF Viewer"
 				/>
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-container">
+		<button
+			class="tab-button"
+			on:click={() => togglePanel('about')}
+			aria-expanded={selectedPanel === 'about'}
+			aria-label="About section"
+		>
+			<span>2</span>
+			<span>ABOUT</span>
+		</button>
+		<div class="panel" class:show={selectedPanel === 'about'}>
+			<div class="panel-content">
+				<span class="close-panel" on:click={closePanel}>&times;</span>
+				<p>
+					Growing since 2021 in the former railway tracks in front of Speicher XI, WARTEN/GARTEN
+					intertwines artistic practice, ecology, and history. The ground beneath it still bears the
+					memory of Bremen’s colonial narrative, once home to warehouses of goods arriving from
+					overseas. Today, native and adventive plants grow together in this soil, carrying stories
+					of displacement and resilience.
+					<br /><br />
+					This website grew from that same ground. Conceived and shaped collectively by students of Integrated
+					Design, Fine Arts and Digital Media within the seminar “To Listen is to Think: A Sound Archive
+					for WARTEN/GARTEN”, developed together with PhD candidate Christian Rosales Fonseca at the
+					University of the Arts Bremen, it became a space to gather and share what we have experienced
+					together. We designed, curated and coded this page as an accessible extension of the garden,
+					a place where sounds, visuals, and thoughts continue to grow.
+					<br /><br />
+
+					The WARTEN/GARTEN Sound Archive is created and cared for by us, the students. It carries
+					forward the spirit of earlier artistic projects rooted in the garden, extending its
+					networks of experiencing through listening, visualizing, and feeling. Like the garden
+					itself, it remains in motion, a shared space of learning, collaboration, memory, and care.
+					<br /><br />
+
+					This website is possible thanks to the support of the Freundeskreis der HfK Bremen.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-container">
+		<button
+			class="tab-button"
+			on:click={() => togglePanel('imprint')}
+			aria-expanded={selectedPanel === 'imprint'}
+			aria-label="Imprint section"
+		>
+			<span>3</span>
+			<span>IMPRINT</span>
+		</button>
+		<div class="panel" class:show={selectedPanel === 'imprint'}>
+			<div class="panel-content">
+				<span class="close-panel" on:click={closePanel}>&times;</span>
+				{@html imprintContent}
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-container">
+		<button
+			class="tab-button"
+			on:click={() => togglePanel('exercises')}
+			aria-expanded={selectedPanel === 'exercises'}
+			aria-label="Exercises section"
+		>
+			<span>4</span>
+			<span>QUOTES</span>
+		</button>
+		<div class="panel" class:show={selectedPanel === 'exercises'}>
+			<div class="panel-content">
+				<span class="close-panel" on:click={closePanel}>&times;</span>
+				{@html quotesContent}
 			</div>
 		</div>
 	</div>
@@ -163,7 +187,7 @@
 		color: var(--secondary-color);
 		border: none;
 		border-radius: 15px;
-		padding: 5px 16px;
+		padding: 2px 16px;
 		cursor: pointer;
 		font-family: var(--font-stylistic);
 		font-size: 26px;
