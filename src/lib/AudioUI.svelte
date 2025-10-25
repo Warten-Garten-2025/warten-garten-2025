@@ -136,13 +136,21 @@
 
 	<div class="audio-right">
 		<div class="player-row">
-			<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s">⏮</button>
+			<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
+				><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
+			>
 			{#if !isPlaying}
-				<button class="icon-btn" on:click={play} title="Play">▶</button>
+				<button class="icon-btn" on:click={play} title="Play"
+					><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
+				>
 			{:else}
-				<button class="icon-btn" on:click={pause} title="Pause">⏸</button>
+				<button class="icon-btn" on:click={pause} title="Pause"
+					><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
+				>
 			{/if}
-			<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s">⏭</button>
+			<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
+				><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
+			>
 			<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
 		</div>
 		<input
@@ -181,7 +189,7 @@
 		bottom: 0;
 		display: flex;
 		align-items: end;
-		gap: 2rem;
+		gap: 1rem;
 		padding: 2rem;
 		z-index: 1000;
 		transition:
@@ -204,7 +212,6 @@
 		height: 26px;
 		vertical-align: middle;
 		margin-right: 8px;
-		fill: #fff;
 	}
 
 	.audio-left,

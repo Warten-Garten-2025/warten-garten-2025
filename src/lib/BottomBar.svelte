@@ -3,6 +3,10 @@
 
 	export let onPanelOpen = () => {};
 
+	export function closeAllPanels() {
+		selectedPanel = null;
+	}
+
 	function togglePanel(panelId) {
 		selectedPanel = selectedPanel === panelId ? null : panelId;
 		if (selectedPanel) {
@@ -203,7 +207,7 @@
 		padding: 15px;
 		overflow-y: auto;
 		flex-grow: 1;
-		background: rgba(255, 255, 255, 0.05);
+		/* background: rgba(255, 255, 255, 0.05); */
 	}
 
 	.close-panel {
