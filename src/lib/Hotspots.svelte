@@ -38,9 +38,9 @@
 		pointer-events: auto;
 		position: absolute;
 
-		width: 40px;
-		height: 40px;
-		border-radius: 14px;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 0.8rem;
 		background-color: var(--primary-color);
 		border: none;
 		cursor: pointer;

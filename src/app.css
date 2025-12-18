@@ -19,12 +19,20 @@
 }
 
 :root {
+  font-size: calc(16 / 1440 * 100vw);
   --primary-color: #BCCD00;
   --secondary-color: #AF097F;
 
   --font-body: myFont, Arial, sans-serif;
   --font-stylistic: myFontStylistic, Arial, sans-serif;
   --font-normnum: myFontNormNum, Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Scales from ~14.5px at 768px to 16px at 1440px */
+    font-size: clamp(8px, calc(12 / 390 * 100vw), 16px);
+  }
 }
 
 html,

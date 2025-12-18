@@ -244,6 +244,7 @@
 		.bottom-bar {
 			flex-direction: column;
 			gap: 1rem;
+			width: auto;
 		}
 	}
 </style>

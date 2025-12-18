@@ -126,11 +126,12 @@
 				<img class="audio-icon" src="/icons/purple/sound.svg" alt="" />
 				{audioData.title}
 			</div>
-			<a class="audio-download" href={audioData.file} download aria-label="Download file ">
-				<img class="audio-icon" src="/icons/purple/download_ss01.svg" alt="" />
-				DOWNLOAD
-			</a>
-			<button class="audio-close" on:click={close}>✕</button>
+			<div class="audio-functions">
+				<a class="audio-download" href={audioData.file} download aria-label="Download file ">
+					<img class="audio-icon" src="/icons/purple/download_ss01.svg" alt="" /> Download
+				</a>
+				<button class="audio-close" on:click={close}>✕</button>
+			</div>
 		</div>
 	</div>
 
@@ -253,14 +254,25 @@
 	.audio-title-row {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		gap: 2rem;
 	}
 
+	.audio-title-row div,
+	.audio-title-row a,
+	.audio-title-row button {
+		font-size: 1.6rem;
+	}
+
 	.audio-title {
-		font-size: 22px;
 		display: flex;
-		align-items: center;
-		gap: 8px;
+		align-items: flex-start;
+		gap: 0.5rem;
+		line-height: 100%;
+	}
+	.audio-title img {
+		width: 1.6rem;
+		height: 1.6rem;
 	}
 
 	.audio-download {
@@ -274,24 +286,28 @@
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-		gap: 8px;
-		font-size: 22px;
+		gap: 0.5rem;
 	}
 
-	.audio-meta {
-		opacity: 0.9;
-		font-size: 14px;
+	.audio-download img {
+		width: 1.6rem;
+		height: 1.6rem;
 	}
 
-	.audio-close {
-		position: absolute;
-		top: 10px;
-		right: 12px;
+	.audio-title-row button.audio-close {
 		background: transparent;
 		border: none;
 		color: var(--secondary-color);
-		font-size: 28px;
+		font-size: 2rem;
 		cursor: pointer;
+	}
+
+	.audio-functions {
+		display: flex;
+		gap: 0;
+		align-items: center;
+		justify-content: space-between;
+		width: 50%;
 	}
 
 	.audio-right {
@@ -474,7 +490,7 @@
 		transform: scale(1.2);
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 768px) {
 		#audio-ui {
 			flex-direction: column;
 			gap: 0.5rem;
