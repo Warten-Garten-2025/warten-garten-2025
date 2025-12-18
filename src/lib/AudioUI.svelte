@@ -10,6 +10,9 @@
 	export let onClose = () => {};
 
 	let audioEl;
+	let titleContainerEl;
+	let titleSpanEl;
+	let isTitleOverflowing = false;
 	let isPlaying = false;
 	let currentTime = 0;
 	let duration = 0;
@@ -73,6 +76,12 @@
 		tooltipX = e.clientX;
 	}
 
+	function checkTitleOverflow() {
+		if (titleContainerEl && titleSpanEl) {
+			isTitleOverflowing = titleSpanEl.offsetWidth > titleContainerEl.offsetWidth;
+		}
+	}
+
 	onMount(() => {
 		audioEl = document.querySelector('#audio-player');
 		if (!audioEl) return;
@@ -114,6 +123,15 @@
 	$: if (audioEl && audioData.file && audioData.file !== lastSetFile) {
 		lastSetFile = audioData.file;
 		audioEl.src = audioData.file;
+		// Autoplay when new audio is loaded
+		audioEl.play().catch(() => {
+			// Browser may block autoplay, silently catch error
+		});
+	}
+
+	// Check overflow when title changes
+	$: if (audioData.title && titleContainerEl && titleSpanEl) {
+		setTimeout(checkTitleOverflow, 100);
 	}
 
 	$: seekPercent = isFinite(duration) && duration > 0 ? (currentTime / duration) * 100 : 0;
@@ -124,8 +142,12 @@
 		<div class="audio-title-row">
 			<div class="audio-title">
 				<img class="audio-icon" src="/icons/purple/sound.svg" alt="" />
-				<div class="audio-title-text">
-					<span>{audioData.title}</span>
+				<div
+					class="audio-title-text"
+					class:scrollable={isTitleOverflowing}
+					bind:this={titleContainerEl}
+				>
+					<span bind:this={titleSpanEl}>{audioData.title}</span>
 				</div>
 			</div>
 			<div class="audio-functions">
@@ -239,18 +261,17 @@
 		color: var(--primary-color);
 		border-radius: 1rem;
 		/* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); */
-		padding: 10px 16px;
-	}
+		padding: 0.5rem 1rem;
 
-	.audio-left {
 		flex: 0 1 50%;
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 1rem;
 		background: var(--primary-color);
 		color: var(--secondary-color);
 		height: fit-content;
+		overflow: hidden;
 	}
 
 	.audio-title-row {
@@ -263,40 +284,41 @@
 	.audio-title-row div,
 	.audio-title-row a,
 	.audio-title-row button {
-		font-size: 1.6rem;
+		font-size: 1.4rem;
 	}
 
 	.audio-title {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		gap: 0.5rem;
-		line-height: 100%;
+		line-height: 1.4;
 		flex: 1;
 		min-width: 0;
-		overflow: hidden;
 	}
-	
+
 	.audio-title-text {
 		flex: 1;
 		min-width: 0;
 		overflow: hidden;
 		position: relative;
-		mask-image: linear-gradient(to right, black 90%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
 	}
-	
+
 	.audio-title-text span {
 		display: inline-block;
 		white-space: nowrap;
+	}
+
+	/* Only apply fade and scroll to overflowing titles */
+	.audio-title-text.scrollable {
+		mask-image: linear-gradient(to right, black 90%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+	}
+
+	.audio-title-text.scrollable span {
 		padding-right: 2rem;
 		animation: scroll-text 10s linear infinite;
-		animation-play-state: paused;
 	}
-	
-	.audio-title:hover .audio-title-text span {
-		animation-play-state: running;
-	}
-	
+
 	@keyframes scroll-text {
 		0% {
 			transform: translateX(0);
@@ -305,10 +327,10 @@
 			transform: translateX(-50%);
 		}
 	}
-	
+
 	.audio-title img {
-		width: 1.6rem;
-		height: 1.6rem;
+		width: 1rem;
+
 		flex-shrink: 0;
 	}
 
@@ -327,21 +349,21 @@
 	}
 
 	.audio-download img {
-		width: 1.6rem;
-		height: 1.6rem;
+		width: 1rem;
 	}
 
 	.audio-title-row button.audio-close {
 		background: transparent;
 		border: none;
 		color: var(--secondary-color);
-		font-size: 2rem;
+		font-size: 1.6rem;
+		font-weight: bold;
 		cursor: pointer;
 	}
 
 	.audio-functions {
 		display: flex;
-		gap: 0;
+		gap: 1rem;
 		align-items: center;
 		justify-content: space-between;
 		width: 50%;
@@ -527,7 +549,7 @@
 		transform: scale(1.2);
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 900px) {
 		#audio-ui {
 			flex-direction: column;
 			gap: 0.5rem;

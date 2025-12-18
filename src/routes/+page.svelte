@@ -216,5 +216,10 @@
 		top: 0;
 		left: 0;
 		outline: none;
+		cursor: grab;
+	}
+
+	canvas.webgl:active {
+		cursor: grabbing;
 	}
 </style>
