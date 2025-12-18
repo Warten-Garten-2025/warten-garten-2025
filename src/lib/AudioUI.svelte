@@ -124,7 +124,9 @@
 		<div class="audio-title-row">
 			<div class="audio-title">
 				<img class="audio-icon" src="/icons/purple/sound.svg" alt="" />
-				{audioData.title}
+				<div class="audio-title-text">
+					<span>{audioData.title}</span>
+				</div>
 			</div>
 			<div class="audio-functions">
 				<a class="audio-download" href={audioData.file} download aria-label="Download file ">
@@ -269,10 +271,45 @@
 		align-items: flex-start;
 		gap: 0.5rem;
 		line-height: 100%;
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
 	}
+	
+	.audio-title-text {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		position: relative;
+		mask-image: linear-gradient(to right, black 90%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+	}
+	
+	.audio-title-text span {
+		display: inline-block;
+		white-space: nowrap;
+		padding-right: 2rem;
+		animation: scroll-text 10s linear infinite;
+		animation-play-state: paused;
+	}
+	
+	.audio-title:hover .audio-title-text span {
+		animation-play-state: running;
+	}
+	
+	@keyframes scroll-text {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+	
 	.audio-title img {
 		width: 1.6rem;
 		height: 1.6rem;
+		flex-shrink: 0;
 	}
 
 	.audio-download {
