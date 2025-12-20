@@ -181,21 +181,29 @@
 			/>
 			<div class="player-row">
 				<button class="icon-btn" on:click={() => skip(-15)} title="Skip back 15s"
-					><img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
+					>BCK<img class="audio-icon" src="/icons/green/rewind.svg" alt="" /></button
 				>
 				{#if !isPlaying}
 					<button class="icon-btn" on:click={play} title="Play"
-						><img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
+						>PLY<img class="audio-icon" src="/icons/green/play.svg" alt="" /></button
 					>
 				{:else}
 					<button class="icon-btn" on:click={pause} title="Pause"
-						><img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
+						>PAU<img class="audio-icon" src="/icons/green/pause.svg" alt="" /></button
 					>
 				{/if}
 				<button class="icon-btn" on:click={() => skip(15)} title="Skip forward 15s"
-					><img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
+					>FWD<img class="audio-icon" src="/icons/green/fastforward.svg" alt="" /></button
 				>
-				<span class="time">{fmtTime(currentTime)} / {fmtTime(duration)}</span>
+				<span class="timeline">
+					<div class="small-text">TTL</div>
+					<span class="time">
+						<h4>
+							{fmtTime(currentTime)} Mins
+						</h4>
+						<p class="duration">/ {fmtTime(duration)}</p>
+					</span>
+				</span>
 			</div>
 			<div id="seek-tooltip" style="left: {tooltipX}px">{tooltipTime}</div>
 			<div class="player-row" style="display:none;">
@@ -247,13 +255,6 @@
 	#audio-ui.active {
 		transform: translateY(0);
 		pointer-events: auto;
-	}
-
-	.audio-icon {
-		width: 16px;
-		height: 26px;
-		vertical-align: middle;
-		margin-right: 8px;
 	}
 
 	.audio-left {
@@ -382,10 +383,10 @@
 		background: var(--secondary-color);
 		color: var(--primary-color);
 		border-radius: 1rem;
-		padding: 14px 16px;
+		padding: 1rem 1rem;
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 1.5rem;
 	}
 
 	.audio-info {
@@ -404,27 +405,72 @@
 
 	.player-row {
 		display: flex;
-		align-items: center;
-		gap: 8px;
+		align-items: start;
+		gap: 0.5rem;
 	}
 
 	.icon-btn {
 		background: transparent;
 		color: var(--primary-color);
 		border: none;
-		font-size: 22px;
+		font-size: 0.5rem;
 		cursor: pointer;
 		line-height: 1;
-		padding: 6px 0px;
+		padding: 0px;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		gap: 0.5rem;
+		margin-right: 0.5rem;
+	}
+	.audio-icon {
+		/* width: 16px; */
+		width: 1.6rem;
+		height: 1.5rem;
+		vertical-align: middle;
 	}
 
-	.icon-btn:hover {
-		color: #fff;
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		align-items: flex-end;
+		gap: 0.2rem;
+		flex: 1;
+		justify-content: flex-end;
+	}
+	.small-text {
+		font-size: 0.5rem;
+		line-height: 1;
+		/*   */
 	}
 
 	.time {
-		margin-left: auto;
+		flex: 1;
 		font-variant-numeric: tabular-nums;
+		display: flex;
+		flex-direction: row;
+		align-items: end;
+		justify-content: flex-end;
+		white-space: nowrap;
+	}
+
+	.time h4 {
+		display: block;
+		margin: 0;
+		font-size: 1.8rem;
+		line-height: 1;
+	}
+
+	p.duration {
+		display: block;
+		margin: 0;
+		font-size: 0.875rem;
+		color: var(--primary-color);
+		font-family: var(--font-normnum);
 	}
 
 	:root {
@@ -494,7 +540,7 @@
 
 	#seek::-webkit-slider-thumb:hover {
 		transform: scale(1.2);
-		background: var(--accent-bright);
+		/* background: var(--accent-bright); */
 		/* box-shadow: 0 0 10px rgba(192, 206, 40, 0.6); */
 	}
 

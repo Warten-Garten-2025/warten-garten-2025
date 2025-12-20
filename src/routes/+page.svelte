@@ -15,7 +15,6 @@
 		artist: '—',
 		file: ''
 	};
-	let bottomBar;
 
 	function handleHotspotClick(audio) {
 		audioData = {
@@ -25,17 +24,9 @@
 			description: audio.description
 		};
 		audioUIActive = true;
-		// Close menu panel when opening audio UI
-		if (bottomBar) {
-			bottomBar.closeAllPanels();
-		}
 	}
 
 	function handleAudioClose() {
-		audioUIActive = false;
-	}
-
-	function handleBottomBarPanelOpen() {
 		audioUIActive = false;
 	}
 
@@ -192,7 +183,7 @@
 
 <canvas class="webgl"></canvas>
 
-<BottomBar bind:this={bottomBar} onPanelOpen={handleBottomBarPanelOpen} />
+<BottomBar />
 <Hotspots onHotspotClick={handleHotspotClick} {particlePositions} />
 <AudioUI isActive={audioUIActive} {audioData} onClose={handleAudioClose} />
 

@@ -83,14 +83,15 @@ h3 {
 
 h4 {
   font-size: 1.4rem;
-  line-height: 1.4;
-  font-family: var(--font-body);
+  line-height: 1.2;
+  font-family: var(--font-normnum);
 }
 
 p {
   font-size: 1rem;
-  line-height: 1.6;
-  font-family: var(--font-body);
+  font-family: var(--font-stylistic);
+  line-height: 1.2;
+  margin: 0;
 }
 
 .text-large {
@@ -103,18 +104,8 @@ p {
   line-height: 1.5;
 }
 
-h1 {
-  font-size: 26px;
-  font-family: var(--font-body);
-}
 
-p {
-  font-size: 16px;
-  font-family: var(--font-stylistic);
-  line-height: 1.2;
-  margin: 0;
 
-}
 
 a {
   color: var(--primary-color);
