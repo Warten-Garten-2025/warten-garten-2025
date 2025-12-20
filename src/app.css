@@ -28,7 +28,7 @@
   --font-normnum: myFontNormNum, Arial, sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   :root {
     /* Scales from ~14.5px at 768px to 16px at 1440px */
     font-size: clamp(8px, calc(12 / 390 * 100vw), 16px);
@@ -92,6 +92,11 @@ p {
   font-family: var(--font-stylistic);
   line-height: 1.2;
   margin: 0;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 .text-large {

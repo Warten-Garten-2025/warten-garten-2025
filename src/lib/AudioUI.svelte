@@ -405,6 +405,8 @@
 		display: flex;
 		align-items: flex-start;
 		width: 100%;
+		margin: 0;
+		padding: 0;
 	}
 
 	.audio-artist img {
@@ -415,11 +417,15 @@
 
 	.audio-artist p {
 		margin: 0;
-		font-size: 1.1rem;
+		font-size: 1.2rem;
 		width: 100%;
 
-		word-break: normal;
+		overflow-wrap: break-word;
+		-webkit-hyphens: auto;
+		-moz-hyphens: auto;
+		-ms-hyphens: auto;
 		hyphens: auto;
+		line-height: 1;
 	}
 
 	.player-row {
