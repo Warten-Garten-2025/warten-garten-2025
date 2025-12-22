@@ -32,42 +32,37 @@
 			<span>1</span>
 			<span>HERBARIUM</span>
 		</button>
-		<div class="panel" class:show={selectedPanel === 'herbarium'}>
-			<div class="panel-content">
+		<div class="panel herbarium-panel" class:show={selectedPanel === 'herbarium'}>
+			<div class="panel-content herbarium-content">
 				<div
-					style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"
+					style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;"
 				>
 					<!-- download -->
-					<a
-						href="/pdf/Herbarium.pdf"
-						download
-						class="download-btn"
-						aria-label="Download PDF"
-						style="margin-right:25px; background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold;"
-					>
-						DOWNLOAD
-					</a>
-					<!-- fullscreen -->
-					<a
-						class="download-btn"
-						aria-label="View fullscreen"
-						style="background:#C0CE28; color:#95127C; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:bold; user-select:none; cursor:pointer;"
-						on:click={() => document.querySelector('.pdf-viewer')?.requestFullscreen()}
-					>
-						FULLSCREEN
-					</a>
-					<span class="close-panel" style="font-size:36px; cursor:pointer;" on:click={closePanel}
-						>&times;</span
+					<div class="left-btns">
+						<a href="/pdf/Herbarium.pdf" download class="download-btn" aria-label="Download PDF">
+							<img src="/icons/green/download_ss01.svg" alt="Download Icon" />
+						</a>
+						<!-- fullscreen -->
+						<button
+							class="download-btn"
+							aria-label="View fullscreen"
+							on:click={() => document.querySelector('.pdf-viewer')?.requestFullscreen()}
+						>
+							<img src="/icons/green/fullscreen.svg" alt="Download Icon" />
+						</button>
+					</div>
+					<button class="close-panel" on:click={closePanel}
+						><img src="/icons/green/close.svg" alt="Close Icon" /></button
 					>
 				</div>
 				<!-- pdf viewer -->
 				<iframe
 					class="pdf-viewer"
-					style="width:100%; height:80vh; border:none; border-radius:10px;"
-					src="/pdf/Herbarium.pdf#toolbar=0&navpanes=0&zoom=FitH"
+					style="width:100%; height:100%; border:none; border-radius:1rem; flex:1;"
+					src="/pdf/Herbarium.pdf"
 					allowfullscreen
 					title="PDF Viewer"
-				/>
+				></iframe>
 			</div>
 		</div>
 	</div>
@@ -124,7 +119,7 @@
 		</button>
 		<div class="panel" class:show={selectedPanel === 'imprint'}>
 			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
+				<button class="close-panel" on:click={closePanel}>&times;</button>
 				{@html imprintContent}
 			</div>
 		</div>
@@ -142,7 +137,7 @@
 		</button>
 		<div class="panel" class:show={selectedPanel === 'exercises'}>
 			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
+				<button class="close-panel" on:click={closePanel}>&times;</button>
 				{@html quotesContent}
 			</div>
 		</div>
@@ -167,6 +162,34 @@
 	.bottom-bar.hidden {
 		opacity: 0;
 		pointer-events: none;
+	}
+
+	button {
+		background: none;
+		border: none;
+	}
+
+	.download-btn,
+	.close-panel {
+		text-decoration: none;
+		font-weight: bold;
+		display: inline-flex;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.download-btn img {
+		width: 2rem;
+		height: 2rem;
+	}
+	.close-panel img {
+		width: 1.8rem;
+	}
+
+	.left-btns {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
 	}
 
 	.tab-container {
@@ -204,22 +227,21 @@
 
 	.panel {
 		position: fixed;
-		bottom: 2rem;
-		right: 2rem;
+		bottom: 0;
+		right: 0;
 		transform-origin: bottom;
 		transform: translateY(160%);
-		width: 80vw;
-		max-width: 700px;
-		max-height: 70vh;
-		background: var(--secondary-color);
-		color: var(--primary-color);
-		border-radius: 12px;
+		width: 50vw;
+		max-height: 80vh;
+		padding: 0 2rem 2rem 0.5rem;
 
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
 		transition: transform 0.4s ease;
 		pointer-events: none;
+
+		z-index: 2;
 	}
 
 	.panel.show {
@@ -228,10 +250,33 @@
 	}
 
 	.panel-content {
-		padding: 15px;
+		padding: 1.4rem;
 		overflow-y: auto;
 		flex-grow: 1;
 		/* background: rgba(255, 255, 255, 0.05); */
+		background: var(--secondary-color);
+		color: var(--primary-color);
+		border-radius: 1rem;
+	}
+
+	.herbarium-panel {
+		height: 80vh;
+	}
+
+	.herbarium-content {
+		display: flex;
+		flex-direction: column;
+		overflow-y: hidden;
+	}
+
+	.herbarium-panel {
+		height: 80vh;
+	}
+
+	.herbarium-content {
+		display: flex;
+		flex-direction: column;
+		overflow-y: hidden;
 	}
 
 	.close-panel {
@@ -245,6 +290,11 @@
 			flex-direction: column;
 			gap: 1rem;
 			width: auto;
+		}
+		.panel {
+			width: 100vw;
+			max-height: 80vh;
+			padding: 0 2rem 2rem 2rem;
 		}
 	}
 </style>

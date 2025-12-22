@@ -245,7 +245,7 @@
 		align-items: end;
 		gap: 1rem;
 		padding: 2rem;
-		z-index: 1000;
+		z-index: 1;
 		transition: transform 0.45s ease;
 		transform: translateY(100%);
 		pointer-events: none;
