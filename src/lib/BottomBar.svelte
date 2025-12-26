@@ -79,30 +79,39 @@
 		</button>
 		<div class="panel" class:show={selectedPanel === 'about'}>
 			<div class="panel-content">
-				<span class="close-panel" on:click={closePanel}>&times;</span>
-				<p>
-					Growing since 2021 in the former railway tracks in front of Speicher XI, WARTEN/GARTEN
-					intertwines artistic practice, ecology, and history. The ground beneath it still bears the
-					memory of Bremen’s colonial narrative, once home to warehouses of goods arriving from
-					overseas. Today, native and adventive plants grow together in this soil, carrying stories
-					of displacement and resilience.
-					<br /><br />
-					This website grew from that same ground. Conceived and shaped collectively by students of Integrated
-					Design, Fine Arts and Digital Media within the seminar “To Listen is to Think: A Sound Archive
-					for WARTEN/GARTEN”, developed together with PhD candidate Christian Rosales Fonseca at the
-					University of the Arts Bremen, it became a space to gather and share what we have experienced
-					together. We designed, curated and coded this page as an accessible extension of the garden,
-					a place where sounds, visuals, and thoughts continue to grow.
-					<br /><br />
+				<div class="panel-left">
+					<button class="close-panel" on:click={closePanel}
+						><img src="/icons/green/close.svg" alt="Close Icon" />
+					</button>
+					<h4>To Listen is to Think</h4>
+				</div>
+				<div class="panel-divider"></div>
+				<div class="panel-right">
+					<p>
+						Growing since 2021 in the former railway tracks in front of Speicher XI, WARTEN/GARTEN
+						intertwines artistic practice, ecology, and history. The ground beneath it still bears
+						the memory of Bremen’s colonial narrative, once home to warehouses of goods arriving
+						from overseas. Today, native and adventive plants grow together in this soil, carrying
+						stories of displacement and resilience.
+						<br /><br />
+						This website grew from that same ground. Conceived and shaped collectively by students of
+						Integrated Design, Fine Arts and Digital Media within the seminar “To Listen is to Think:
+						A Sound Archive for WARTEN/GARTEN”, developed together with PhD candidate Christian Rosales
+						Fonseca at the University of the Arts Bremen, it became a space to gather and share what
+						we have experienced together. We designed, curated and coded this page as an accessible extension
+						of the garden, a place where sounds, visuals, and thoughts continue to grow.
+						<br /><br />
 
-					The WARTEN/GARTEN Sound Archive is created and cared for by us, the students. It carries
-					forward the spirit of earlier artistic projects rooted in the garden, extending its
-					networks of experiencing through listening, visualizing, and feeling. Like the garden
-					itself, it remains in motion, a shared space of learning, collaboration, memory, and care.
-					<br /><br />
+						The WARTEN/GARTEN Sound Archive is created and cared for by us, the students. It carries
+						forward the spirit of earlier artistic projects rooted in the garden, extending its
+						networks of experiencing through listening, visualizing, and feeling. Like the garden
+						itself, it remains in motion, a shared space of learning, collaboration, memory, and
+						care.
+						<br /><br />
 
-					This website is possible thanks to the support of the Freundeskreis der HfK Bremen.
-				</p>
+						This website is possible thanks to the support of the Freundeskreis der HfK Bremen.
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -179,11 +188,10 @@
 	}
 
 	.download-btn img {
-		width: 2rem;
-		height: 2rem;
+		width: 1.4rem;
 	}
 	.close-panel img {
-		width: 1.8rem;
+		width: 1.4rem;
 	}
 
 	.left-btns {
@@ -253,6 +261,9 @@
 		padding: 1.4rem;
 		overflow-y: auto;
 		flex-grow: 1;
+
+		display: flex;
+		flex-direction: row;
 		/* background: rgba(255, 255, 255, 0.05); */
 		background: var(--secondary-color);
 		color: var(--primary-color);
@@ -283,6 +294,27 @@
 		cursor: pointer;
 		font-size: 40px;
 		float: right;
+		height: auto;
+		margin: 0;
+		padding: 0;
+	}
+	.close-panel img {
+		width: 1.4rem;
+	}
+
+	.panel-left {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	.panel-divider {
+		width: 0.5rem;
+		background: var(--primary-color);
+		margin: 0 1.5rem;
+	}
+	.panel-right {
+		flex: 3;
 	}
 
 	@media (max-width: 900px) {
