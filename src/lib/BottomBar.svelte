@@ -1,7 +1,11 @@
 <script>
+	import { fly } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
 	import { imprintContent } from './imprintContent';
 	import { quotesContent } from './quotesContent';
 	let selectedPanel = null;
+	let currentQuoteIndex = 0;
+	let slideDirection = 1; // 1 for next (left), -1 for prev (right)
 
 	export let onPanelOpen = () => {};
 
@@ -18,6 +22,16 @@
 
 	function closePanel() {
 		selectedPanel = null;
+	}
+
+	function nextQuote() {
+		slideDirection = 1;
+		currentQuoteIndex = (currentQuoteIndex + 1) % quotesContent.length;
+	}
+
+	function prevQuote() {
+		slideDirection = -1;
+		currentQuoteIndex = (currentQuoteIndex - 1 + quotesContent.length) % quotesContent.length;
 	}
 </script>
 
@@ -156,9 +170,31 @@
 			<span>QUOTES</span>
 		</button>
 		<div class="panel" class:show={selectedPanel === 'exercises'}>
-			<div class="panel-content">
-				<button class="close-panel" on:click={closePanel}>&times;</button>
-				{@html quotesContent}
+			<div class="panel-content" style="height: 80vh;">
+				<div class="panel-left">
+					<button class="close-panel" on:click={closePanel}
+						><img src="/icons/green/close.svg" alt="Close Icon" />
+					</button>
+					<h4>To Listen is to Think</h4>
+				</div>
+				<div class="panel-divider"></div>
+				<div class="panel-right quotes-carousel">
+					{#key currentQuoteIndex}
+						<div
+							class="quote-container"
+							in:fly={{ x: slideDirection * 1000, duration: 500, opacity: 0, easing: cubicInOut }}
+							out:fly={{ x: slideDirection * -1000, duration: 500, opacity: 0, easing: cubicInOut }}
+						>
+							<p class="quote-text">"{quotesContent[currentQuoteIndex].text}"</p>
+							<p class="quote-author">— {quotesContent[currentQuoteIndex].author}</p>
+						</div>
+					{/key}
+					<div class="carousel-nav">
+						<button class="carousel-btn" on:click={prevQuote} aria-label="Previous quote">‹</button>
+						<span class="carousel-counter">{currentQuoteIndex + 1} / {quotesContent.length}</span>
+						<button class="carousel-btn" on:click={nextQuote} aria-label="Next quote">›</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -338,6 +374,75 @@
 
 	.panel-right::-webkit-scrollbar {
 		display: none; /* Chrome, Safari, Opera */
+	}
+
+	.quotes-carousel {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		overflow-y: hidden;
+		position: relative;
+	}
+
+	.quote-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.quote-text {
+		font-size: 1.2rem;
+		line-height: 1.8;
+		margin: 0;
+	}
+
+	.quote-author {
+		font-size: 0.9rem;
+		font-style: italic;
+		margin: 0;
+		opacity: 0.9;
+	}
+
+	.carousel-nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+		margin-top: 2rem;
+
+		position: absolute;
+		bottom: 0;
+	}
+
+	.carousel-btn {
+		background: var(--primary-color);
+		color: var(--secondary-color);
+		border: none;
+		border-radius: 50%;
+		width: 2.5rem;
+		height: 2.5rem;
+		font-size: 2rem;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s ease;
+	}
+
+	.carousel-btn:hover {
+		background: var(--secondary-color);
+		color: var(--primary-color);
+		transform: scale(1.1);
+	}
+
+	.carousel-counter {
+		font-size: 1rem;
+		min-width: 4rem;
+		text-align: center;
 	}
 
 	@media (max-width: 900px) {
