@@ -6,7 +6,7 @@
 	import Hotspots from '$lib/Hotspots.svelte';
 	import AudioUI from '$lib/AudioUI.svelte';
 	import { audioFiles } from '$lib/audioData.js';
-	import panoramaImage from './panorama_01.jpg';
+	import panoramaImage from './panorama_03.jpg';
 
 	let audioUIActive = false;
 	let particlePositions = {}; // Changed to object for better reactivity

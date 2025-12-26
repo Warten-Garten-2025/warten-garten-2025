@@ -22,6 +22,7 @@
 </script>
 
 <div class="bottom-bar">
+	<!-- Herbarium Tab -->
 	<div class="tab-container">
 		<button
 			class="tab-button"
@@ -38,6 +39,9 @@
 					style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;"
 				>
 					<!-- download -->
+					<button class="close-panel" on:click={closePanel}
+						><img src="/icons/green/close.svg" alt="Close Icon" />
+					</button>
 					<div class="left-btns">
 						<a href="/pdf/Herbarium.pdf" download class="download-btn" aria-label="Download PDF">
 							<img src="/icons/green/download_ss01.svg" alt="Download Icon" />
@@ -51,9 +55,6 @@
 							<img src="/icons/green/fullscreen.svg" alt="Download Icon" />
 						</button>
 					</div>
-					<button class="close-panel" on:click={closePanel}
-						><img src="/icons/green/close.svg" alt="Close Icon" /></button
-					>
 				</div>
 				<!-- pdf viewer -->
 				<iframe
@@ -67,6 +68,7 @@
 		</div>
 	</div>
 
+	<!-- About Tab -->
 	<div class="tab-container">
 		<button
 			class="tab-button"
@@ -116,6 +118,7 @@
 		</div>
 	</div>
 
+	<!-- Imprint Tab -->
 	<div class="tab-container">
 		<button
 			class="tab-button"
@@ -128,8 +131,16 @@
 		</button>
 		<div class="panel" class:show={selectedPanel === 'imprint'}>
 			<div class="panel-content">
-				<button class="close-panel" on:click={closePanel}>&times;</button>
-				{@html imprintContent}
+				<div class="panel-left">
+					<button class="close-panel" on:click={closePanel}
+						><img src="/icons/green/close.svg" alt="Close Icon" />
+					</button>
+					<h4>To Listen is to Think</h4>
+				</div>
+				<div class="panel-divider"></div>
+				<div class="panel-right">
+					{@html imprintContent}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -268,6 +279,10 @@
 		background: var(--secondary-color);
 		color: var(--primary-color);
 		border-radius: 1rem;
+
+		/* Hide scrollbar */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
 	}
 
 	.herbarium-panel {
@@ -315,6 +330,14 @@
 	}
 	.panel-right {
 		flex: 3;
+		overflow-y: auto;
+		/* Hide scrollbar */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
+	}
+
+	.panel-right::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera */
 	}
 
 	@media (max-width: 900px) {
