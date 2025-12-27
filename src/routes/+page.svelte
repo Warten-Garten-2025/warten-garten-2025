@@ -5,6 +5,7 @@
 	import BottomBar from '$lib/BottomBar.svelte';
 	import Hotspots from '$lib/Hotspots.svelte';
 	import AudioUI from '$lib/AudioUI.svelte';
+	import LoadingScreen from '$lib/LoadingScreen.svelte';
 	import { audioFiles } from '$lib/audioData.js';
 	import panoramaImage from './panorama_03.jpg';
 
@@ -15,6 +16,11 @@
 		artist: '—',
 		file: ''
 	};
+
+	// Loading state
+	let loadingProgress = 0;
+	let isLoading = true;
+	let shouldFadeOut = false;
 
 	function handleHotspotClick(audio) {
 		audioData = {
@@ -63,9 +69,37 @@
 		);
 		geometry.scale(-1, 1, 1); // Invert the sphere so we see the inside
 
-		// Load the panorama texture
+		// Load the panorama texture with progress tracking
 		const textureLoader = new THREE.TextureLoader();
-		const texture = textureLoader.load(panoramaImage);
+		const texture = textureLoader.load(
+			panoramaImage,
+			// onLoad callback
+			() => {
+				loadingProgress = 100;
+				// Delay to show 100% briefly, then trigger fade out
+				setTimeout(() => {
+					shouldFadeOut = true;
+					// Hide completely after fade animation completes
+					setTimeout(() => {
+						isLoading = false;
+					}, 800); // Match fadeOut animation duration
+				}, 500);
+			},
+			// onProgress callback
+			(xhr) => {
+				if (xhr.lengthComputable) {
+					loadingProgress = (xhr.loaded / xhr.total) * 100;
+				} else {
+					// Simulate progress if size is unknown
+					loadingProgress = Math.min(loadingProgress + 10, 90);
+				}
+			},
+			// onError callback
+			(error) => {
+				console.error('Error loading panorama:', error);
+				isLoading = false;
+			}
+		);
 		texture.colorSpace = THREE.SRGBColorSpace;
 
 		// Create material with the panorama texture
@@ -244,6 +278,10 @@
 	}
 	<\/script>`}
 </svelte:head>
+
+<!-- For testing: progress={75} isVisible={true} shouldFadeOut={false} -->
+<!-- For production: progress={loadingProgress} isVisible={isLoading} {shouldFadeOut} -->
+<LoadingScreen progress={loadingProgress} isVisible={isLoading} {shouldFadeOut} />
 
 <canvas class="webgl"></canvas>
 
