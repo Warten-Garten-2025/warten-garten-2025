@@ -159,6 +159,7 @@
 		</div>
 	</div>
 
+	<!-- Quotes Tab -->
 	<div class="tab-container">
 		<button
 			class="tab-button"
@@ -175,7 +176,16 @@
 					<button class="close-panel" on:click={closePanel}
 						><img src="/icons/green/close.svg" alt="Close Icon" />
 					</button>
-					<h4>To Listen is to Think</h4>
+					<div class="left-bottom">
+						<h4>Quotes and passages we read, reflected on, and discussed</h4>
+						<div class="carousel-nav">
+							<button class="carousel-btn" on:click={prevQuote} aria-label="Previous quote"
+								>‹</button
+							>
+							<span class="carousel-counter">{currentQuoteIndex + 1} / {quotesContent.length}</span>
+							<button class="carousel-btn" on:click={nextQuote} aria-label="Next quote">›</button>
+						</div>
+					</div>
 				</div>
 				<div class="panel-divider"></div>
 				<div class="panel-right quotes-carousel">
@@ -189,11 +199,6 @@
 							<p class="quote-author">— {quotesContent[currentQuoteIndex].author}</p>
 						</div>
 					{/key}
-					<div class="carousel-nav">
-						<button class="carousel-btn" on:click={prevQuote} aria-label="Previous quote">‹</button>
-						<span class="carousel-counter">{currentQuoteIndex + 1} / {quotesContent.length}</span>
-						<button class="carousel-btn" on:click={nextQuote} aria-label="Next quote">›</button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -358,6 +363,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		min-width: 0;
 	}
 	.panel-divider {
 		width: 0.5rem;
@@ -395,9 +401,10 @@
 	}
 
 	.quote-text {
-		font-size: 1.2rem;
-		line-height: 1.8;
+		font-size: 2rem;
+		line-height: 1.2;
 		margin: 0;
+		text-indent: 2rem;
 	}
 
 	.quote-author {
@@ -405,22 +412,19 @@
 		font-style: italic;
 		margin: 0;
 		opacity: 0.9;
+		padding-left: 4rem;
 	}
 
 	.carousel-nav {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 2rem;
+		gap: 1rem;
 		margin-top: 2rem;
-
-		position: absolute;
-		bottom: 0;
 	}
 
 	.carousel-btn {
-		background: var(--primary-color);
-		color: var(--secondary-color);
+		color: var(--primary-color);
 		border: none;
 		border-radius: 50%;
 		width: 2.5rem;
@@ -434,9 +438,7 @@
 	}
 
 	.carousel-btn:hover {
-		background: var(--secondary-color);
-		color: var(--primary-color);
-		transform: scale(1.1);
+		transform: scale(1.5);
 	}
 
 	.carousel-counter {
