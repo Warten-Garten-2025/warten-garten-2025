@@ -369,6 +369,7 @@
 		width: 0.5rem;
 		background: var(--primary-color);
 		margin: 0 1.5rem;
+		border-radius: 0.3rem;
 	}
 	.panel-right {
 		flex: 3;
@@ -395,9 +396,19 @@
 		top: 0;
 		left: 0;
 		right: 0;
+		bottom: 0;
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
+		overflow-y: auto;
+		padding-right: 0.5rem;
+
+		/* Hide scrollbar */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
+	}
+	.quote-container::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera */
 	}
 
 	.quote-text {
@@ -457,6 +468,13 @@
 			width: 100vw;
 			max-height: 80vh;
 			padding: 0 2rem 2rem 2rem;
+		}
+		.carousel-nav {
+			gap: 0;
+		}
+
+		.quote-text {
+			font-size: 1.5rem;
 		}
 	}
 </style>

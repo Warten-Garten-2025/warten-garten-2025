@@ -152,7 +152,8 @@
 			</div>
 			<div class="audio-functions">
 				<a class="audio-download" href={audioData.file} download aria-label="Download file ">
-					<img class="audio-icon" src="/icons/purple/download_ss01.svg" alt="" /> Download
+					<img class="audio-icon" src="/icons/purple/download_ss01.svg" alt="" />
+					<div class="download-text">Download</div>
 				</a>
 				<button class="audio-close" on:click={close}>✕</button>
 			</div>
@@ -351,7 +352,7 @@
 	}
 
 	.audio-download img {
-		width: 1rem;
+		width: 1.1rem;
 	}
 
 	.audio-title-row button.audio-close {
@@ -509,16 +510,16 @@
 		-webkit-appearance: none;
 		appearance: none;
 		width: 100%;
-		height: 10px;
-		border-radius: 3px;
+		height: 0.6rem;
+		border-radius: 0.3rem;
 		outline: none;
-		border: 1px solid var(--primary-color);
+		border: 1px solid rgba(192, 206, 40, 0.5);
 		transition: height 0.2s ease;
 	}
 
 	#vol {
 		max-width: 160px;
-		height: 6px;
+		height: 0.6rem;
 		background-color: var(--secondary-color);
 	}
 
@@ -542,20 +543,20 @@
 
 	#seek:hover + #seek-tooltip {
 		opacity: 1;
-		transform: translateX(-50%) translateY(-3px);
+		transform: translateX(-50%) translateY(0);
 	}
 
 	#seek::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 24px;
-		height: 24px;
-		border-radius: 8px;
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 0.5rem;
 		background: var(--accent);
 		border: none;
 		cursor: pointer;
-		margin-top: -2px;
-		margin-left: -1px;
+		/* margin-top: -2px;
+		margin-left: -1px; */
 		/* box-shadow: 0 0 6px rgba(192, 206, 40, 0.4); */
 		transition:
 			transform 0.15s ease,
@@ -644,6 +645,14 @@
 		.audio-info {
 			width: 100%;
 			height: fit-content;
+		}
+
+		.audio-functions {
+			width: auto;
+		}
+
+		.download-text {
+			display: none;
 		}
 	}
 </style>
