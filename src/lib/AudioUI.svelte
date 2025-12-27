@@ -362,6 +362,7 @@
 		font-size: 1.6rem;
 		font-weight: bold;
 		cursor: pointer;
+		padding: 0;
 	}
 
 	.audio-functions {

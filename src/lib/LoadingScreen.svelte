@@ -23,8 +23,10 @@
 		position: fixed;
 		top: 0;
 		left: 0;
+		right: 0;
+		bottom: 0;
 		width: 100%;
-		height: 100vh;
+		height: 100dvh; /* Use dynamic viewport height for mobile */
 		background: var(--secondary-color);
 		display: flex;
 		align-items: center;
