@@ -181,6 +181,70 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Warten/Garten</title>
+	<meta
+		name="description"
+		content="Growing since 2021 in the former railway tracks in front of Speicher XI, WARTEN/GARTEN intertwines artistic practice, ecology, and history. A sound archive created by students of the University of the Arts Bremen."
+	/>
+	<meta
+		name="keywords"
+		content="sound archive, Bremen, Speicher XI, ecology, art, field recording, WARTEN/GARTEN, HfK Bremen, botanical garden, colonial history"
+	/>
+	<meta
+		name="author"
+		content="Students of Integrated Design, Fine Arts and Digital Media, HfK Bremen"
+	/>
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://wartengarten.xyz/" />
+	<meta property="og:title" content="Warten/Garten Sound Archive - Bremen" />
+	<meta
+		property="og:description"
+		content="A sound archive for WARTEN/GARTEN garden, intertwining artistic practice, ecology, and history in Bremen's Speicher XI."
+	/>
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://wartengarten.xyz/" />
+	<meta property="twitter:title" content="Warten/Garten Sound Archive - Bremen" />
+	<meta
+		property="twitter:description"
+		content="A sound archive for WARTEN/GARTEN garden, intertwining artistic practice, ecology, and history in Bremen's Speicher XI."
+	/>
+
+	<!-- Canonical URL -->
+	<link rel="canonical" href="https://wartengarten.xyz/" />
+
+	<!-- Structured Data for SEO -->
+	{@html `<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Warten/Garten Sound Archive",
+		"url": "https://wartengarten.xyz/",
+		"description": "A sound archive documenting WARTEN/GARTEN garden in Bremen, created through artistic practice, field recording, and ecological reflection.",
+		"about": {
+			"@type": "Place",
+			"name": "Warten/Garten",
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Bremen",
+				"addressCountry": "Germany"
+			},
+			"description": "A garden growing since 2021 in former railway tracks in front of Speicher XI, Bremen"
+		},
+		"creator": {
+			"@type": "Organization",
+			"name": "University of the Arts Bremen",
+			"alternateName": "HfK Bremen"
+		},
+		"inLanguage": "en"
+	}
+	<\/script>`}
+</svelte:head>
+
 <canvas class="webgl"></canvas>
 
 <BottomBar />
